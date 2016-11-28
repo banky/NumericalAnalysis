@@ -4,6 +4,7 @@ function [ y ] = RungeKutta2( yInitial,step,lowerBound,upperBound,func )
     yIndex = 1;
     for t=lowerBound:step:(upperBound-step)
         k1 = step*func(t,yInitial);
+        % TODO: Fix this error check. This is dumb
         if(t == (upperBound-2*step))
             k2 = step*func(t+step,yInitial+k1);
         else
