@@ -1,10 +1,10 @@
 %% Eulers Method
 f = @(x,y) y+2*x-1;
 yInitial = 1;
-step = 0.001;
+step = 0.05;
 upperBound = 1;
 lowerBound = 0;
-EulersMethod(yInitial, step,lowerBound, upperBound, f)
+EulersMethod(yInitial, step,lowerBound, upperBound, f);
 
 %% Heuns Method
 f = @(x,y) -5*y+exp(-2*x);
@@ -12,4 +12,53 @@ yInitial = 1;
 step = 0.2;
 upperBound = 2;
 lowerBound = 0;
-HeunsMethod(yInitial,step,lowerBound, upperBound,f);
+HeunsMethod(yInitial,step,lowerBound,upperBound,f);
+
+%% 2nd Order Runge Kutta
+f = @(t,I) (-20/50)*I+10/50;
+yInitial = 0;
+step = 0.1;
+upperBound = 5;
+lowerBound = 0;
+RungeKutta2(yInitial, step, lowerBound, upperBound, f);
+
+%% Assignment 8 No 3
+f = @(t,v)9.8-(0.203*v^2)/80;
+vInitial = 0;
+step = 0.001;
+upperBound = 20;
+lowerBound = 0;
+v = RungeKutta2(vInitial,step,lowerBound,upperBound,f);
+t = (lowerBound:step:(upperBound-step));
+vAnalytical = (62.1455.*exp(0.315389.*t)-62.1455)./(exp(0.315389.*t)+1);
+
+figure
+plot(t,v);
+hold on
+plot(t,vAnalytical)
+hold off
+
+g = @(t,y)v(int32((t/step)+1),1);
+yInitial = 0;
+step = 0.01;
+upperBound = 20;
+lowerBound = 0;
+
+y = RungeKutta2(yInitial,step,lowerBound,upperBound,g);
+yAnalytical = -62.1455.*t+394.089.*log(exp(0.315389.*t)+1)-273.161;
+
+for i=1:size(y,1)
+    if y(i,1) >= 500
+        sol = y(i,1);
+        solIndex = i;
+        break
+    end
+end
+
+tSol = t(1,solIndex);
+
+figure
+plot(t,y)
+hold on
+plot(t,yAnalytical);
+hold off
