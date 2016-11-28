@@ -14,7 +14,5 @@ function [ y ] = RungeKutta2( yInitial,step,lowerBound,upperBound,func )
         yInitial = yInitial + 0.5*(k1 + k2);
         y(yIndex,1) = yInitial;
         yIndex = yIndex + 1;
-        
-        %int32((t/step)+1)
     end
 end

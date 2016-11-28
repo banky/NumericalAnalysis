@@ -15,17 +15,34 @@ lowerBound = 0;
 HeunsMethod(yInitial,step,lowerBound,upperBound,f);
 
 %% 2nd Order Runge Kutta
-f = @(t,I) (-20/50)*I+10/50;
+f = @(x,y) -5*y+exp(-2*x);
 yInitial = 0;
-step = 0.1;
+step = 0.00001;
 upperBound = 5;
 lowerBound = 0;
-RungeKutta2(yInitial, step, lowerBound, upperBound, f);
+
+x = transpose(lowerBound:step:(upperBound-step));
+yAnalytical = (exp(-2*x)+2*exp(-5*x))/3;
+
+a = RungeKutta2(yInitial, step, lowerBound, upperBound, f);
+b = RungeKutta4(yInitial, step, lowerBound, upperBound, f);
+%b = HeunsMethod(yInitial, step, lowerBound, upperBound, f);
+
+%sum((yAnalytical - a).^2)
+%sum((yAnalytical - b).^2)
+
+figure
+hold on
+plot(x,yAnalytical,'color','r');
+%plot(x,a,'-','color','b');
+plot(x,b,'color','g');
+hold off
+
 
 %% Assignment 8 No 3
 f = @(t,v)9.8-(0.203*v^2)/80;
 vInitial = 0;
-step = 0.0005;
+step = 0.00001;
 upperBound = 20;
 lowerBound = 0;
 v = RungeKutta2(vInitial,step,lowerBound,upperBound,f);
@@ -44,7 +61,7 @@ yInitial = 0;
 upperBound = 20;
 lowerBound = 0;
 
-y = RungeKutta2(yInitial,step,lowerBound,upperBound,g);
+y = RungeKutta4(yInitial,step,lowerBound,upperBound,g);
 yAnalytical = -62.1455.*t+394.089.*log(exp(0.315389.*t)+1)-273.161;
 
 for i=1:size(y,1)
@@ -64,3 +81,4 @@ plot(t,y)
 hold on
 plot(t,yAnalytical);
 hold off
+
