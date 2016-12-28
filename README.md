@@ -1,3 +1,3 @@
-# Numerical Methods Toolbox
+# Numerical Analysis Toolbox
 
-Core functions picked up through MTE 204
+A MATLAB library that outlines the implementation of several numerical analysis techniques. View the examples file to get started. 
